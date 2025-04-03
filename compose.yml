@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: user2
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+
+
+  flyway:
+    image: flyway/flyway:latest
+    depends_on:
+      - mysql
+    volumes:
+      - ./migrate:/flyway/sql
+      - ./flyway.conf:/flyway/conf/flyway.conf
+    command: migrate
+    environment:
+      - FLYWAY_URL=jdbc:mysql://mysql:3306/testdb?allowPublicKeyRetrieval=true&useSSL=false
+      - FLYWAY_USER=root
+      - FLYWAY_PASSWORD=1234
