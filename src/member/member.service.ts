@@ -19,4 +19,8 @@ export class MemberService {
 
     return this.memberRepository.save(member);
   }
+
+  async findAll(): Promise<Member[]> {
+    return this.memberRepository.find();
+  }
 }

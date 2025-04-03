@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { MemberService } from './member.service';
 import { CreateMemberRequest } from './dto/create-member.request';
 import { Member } from './entity/member.entity';
@@ -10,5 +10,10 @@ export class MemberController {
   @Post()
   async create(@Body() body: CreateMemberRequest): Promise<Member> {
     return this.memberService.signUp(body);
+  }
+
+  @Get()
+  async findAll(): Promise<Member[]> {
+    return this.memberService.findAll();
   }
 }
