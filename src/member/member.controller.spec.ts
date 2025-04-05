@@ -7,9 +7,17 @@ describe('MemberController', () => {
   let controller: MemberController;
 
   beforeEach(async () => {
+    const mockMemberService = {
+      signUp: jest.fn().mockResolvedValue({ id: 1, email: 'hello@gmail.com' }),
+    };
     const module: TestingModule = await Test.createTestingModule({
       controllers: [MemberController],
-      providers: [MemberService],
+      providers: [
+        {
+          provide: MemberService,
+          useValue: mockMemberService,
+        },
+      ],
     }).compile();
 
     controller = module.get<MemberController>(MemberController);
